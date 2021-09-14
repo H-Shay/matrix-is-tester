@@ -71,6 +71,14 @@ class V1Test(BaseApiTest, unittest.TestCase):
         self.assertEquals(body["not_before"], body2["not_before"])
         self.assertEquals(body["not_after"], body2["not_after"])
 
+    def test_unbind(self):
+        params = self.api.request_and_submit_email_code("testytest@nowhere.test")
+        self.api.bind_email(
+            params["sid"], params["client_secret"], "@testytest:fake.test"
+        )
+        self.api.unbind("@testytest:fake.test", params["client_secret"], params["sid"], "testytest@nowhere.test")
+        lookup_res = self.api.lookupv1("email", "testytest@nowhere.test")
+        breakpoint()
 
 if __name__ == "__main__":
     import sys

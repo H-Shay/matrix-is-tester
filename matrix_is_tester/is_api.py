@@ -213,3 +213,10 @@ class IsApi(object):
         if "algorithms" in body:
             return None
         return body
+
+    def unbind(self, mxid, sid, client_secret, threepid):
+        resp = requests.post(
+            self.apiRoot + "/3pid/unbind",
+            json={"client_secret": client_secret, "mxid": mxid, "sid": sid, "threepid":threepid}
+            )
+        return resp.json
